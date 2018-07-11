@@ -1,0 +1,16 @@
+table{
+    border: 1px solid black;
+    background-color:lightgrey;
+}
+td{
+    padding-right:50px;
+    border-bottom:1px solid grey;
+}
+td{
+    text-align:right;
+    border-right: 1px solid black;
+}
+th{
+    border-bottom:1px solid grey;
+    border-right: 1px solid black;
+}
