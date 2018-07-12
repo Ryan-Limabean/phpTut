@@ -45,7 +45,7 @@
 
            </select></br>
 
-            <label>Dvds rented:</label>
+            <label>DVDs rented:</label>
            
 
         
@@ -101,19 +101,15 @@
                                 <input type="checkbox" name="check[]"   value="<?= $arrayId[$idCount]  ?>" ><?= $x ?><br>
                                 
                                     <?php
-    
                                 }
-                                
-                
+                            
                        $idCount++;
-                     
-        
                     }  
-                         
+
+                  
             ?>  
             </select>  
-                     
-
+                    
             <label>Rent Date:</label>
             <input  name="rent_date" type="date" value="<?= $row['rent_date'];?>" required><br>
             
@@ -126,6 +122,8 @@
 
        <?php
         }
+       
+
         ?>
 
         </form>
@@ -140,12 +138,13 @@
 
         
             $update->update("UPDATE orders  SET customer_id='$customerId', rent_date='$rent_date', due_date='$due_date', actual_return_date='$actual_return_date'  WHERE id='$id'");
-            echo "<pre>";
-            var_dump($_POST['check']);
-            echo "<pre>";
+            
+          
+            $update->update("DELETE FROM dvd_order WHERE order_id ='$id'");
+            
 
             foreach($_POST['check'] as $dvd_id){
-              $update->update("UPDATE dvd_order set dvd_id = '$dvd' where order_id='$id'");
+                $dvd_order =  $update->update("INSERT INTO dvd_order(order_id, dvd_id) VALUES ('$id','$dvd_id');");
             }
 
 
