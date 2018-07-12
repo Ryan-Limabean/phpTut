@@ -42,7 +42,7 @@
              ?> 
             <!-- fetching all dvd available from DB -->
 
-            <input type="checkbox" name="dvd[]" value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?><br>
+            <input type="checkbox" name="dvd[]" value="<?php echo $row['id'] ?>" ><?php echo $row['name']?><br>
 
            <?php }  ?>
     

@@ -12,52 +12,56 @@
    <h1>Orders</h1>
 
       <table>
-        <tr><th>id</th><th>Customer ID</th><th>Rent date</th><th>Due date</th><th>Actual return date</th><th>Rented DVDs</th><th>Actions</th></tr>
+        <tr><th>id</th><th>Customer ID</th><th>DVDs</th><th>Rent date</th><th>Due date</th><th>Actual return date</th><th>Actions</th></tr>
 
            <?php 
-		    
+
               $order = new mysql_database('localhost','root','','dvd_shop');
-              $result = $order->fetch("SELECT * FROM orders");
+              $result = $order->fetch("
+              select * 
+              from orders");
+             
               while ($row = $result->fetch_assoc()) {
-                
+              
              ?> 
                 
                 <td><?php echo $row["id"]?></td>
                 <td><?php echo $row["customer_id"]?></td>
+                <td>
+               
+                      
+               <?php $result2 = $order->fetch("SELECT * 
+                                                from dvd_order 
+                                                join dvd on dvd_order.dvd_id = dvd.id
+                                                where order_id = ".$row['id'].""); 
+
+                    while($row2 = $result2->fetch_assoc()) {
+
+                 ?>
+                      <li><?= $row2["name"] ?></li>
+
+                   <?php } ?>
+
+
+                </td>
                 <td><?php echo $row["rent_date"]?></td>                             
                 <td><?php echo $row["due_date"]?></td>
-				
-				 <td>
-				    <ul>
-					   <?php 
-					       
-					       $sql2 = "SELECT dvd_id from dvd_order WHERE order_id=".$row["id"]."";
-						   
-                           $array = array();
-						   
-					       $result2 = $order ->fetch($sql2);
-						   while ($row2 = $result2->fetch_assoc()) {
-							   ?>
-							<li><?php echo $order->fetch("SELECT name from dvd where id=".$row2[$dvd_id].""); ?></li>
-							   
-							   
-						  <?php } ?>
-						   
-   
-				    </ul>
-				 
-				 </td>
-				
                 <td><?php echo $row["actual_return_date"]?></td>
-                <td><a href="updateOrder.php?id=<?php echo $row['id']?>">edit</a> <a href="deleteOrder.php?id=<?php echo $row['id']?>">delete</a></td></tr>
+                <td>
+                  <a href="updateOrder.php?id=<?= $row['id'] ?>">edit</a>
+                  <br>
+                  <a href="deleteOrder.php?id=<?php echo $row['id']?>">delete</a>
+                </td>
+              </tr>
 
 
 
           <?php  } ?>
            
-             
-        </table>
-		
+              
+        
+  
+        </table>   
         <form action="addOrder.php">
           <input  type="submit" value="Add Order"> 
         </form>
